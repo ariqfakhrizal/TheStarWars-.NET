@@ -1,0 +1,75 @@
+﻿@model List<FlexiDevWitchSagaMVC.Models.Person>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "The Story: FlexiDev Witch Saga: Return of The Coder!";
+}
+
+@using (Html.BeginForm())
+{
+<div class="d-flex justify-content-center">
+    <div class="card bg-light mb-3" style="max-width: 75rem;">
+        <h5 class="card-header">@ViewBag.Title</h5>
+        <div class="card-body">
+
+            <div id="people">
+                @if (Model != null)
+                {
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                <div class="person">
+                    <h5 class="card-title">Person @(i + 1)</h5>
+                    <div class="form-group row" style="margin:10px 0px;">
+                        <label for="inputAoD" class="col-sm-4 col-form-label">Age of Death</label>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m[i].AgeOfDeath, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row" style="margin:10px 0px;">
+                        <label for="inputYoD" class="col-sm-4 col-form-label">Year of Death</label>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m[i].YearOfDeath, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                    }
+                }
+            </div>
+            <div class="card-footer bg-transparent text-center" style="margin-top:15px; padding-top:20px;">
+                <button type="submit" class="btn btn-outline-success">♻ <b>Calculate Average</b> </button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+
+<div class="d-flex justify-content-center">
+    <div class="card border-light mb-3" style="max-width: 75rem;">
+        <h5 class="text-center">Results</h5>
+        @if (ViewBag.AverageKills != null)
+        {
+            if(ViewBag.AverageKills >= 0)
+            {
+                <div class="alert alert-info text-center" role="alert">
+                    The average is <a href="#" class="alert-link"> @ViewBag.AverageKills </a>
+                </div>
+            }
+            else{
+                <div class="alert alert-danger text-center" role="alert">
+                    Hmm, Something Wrong? <br> The average is <a href="#" class="alert-link"> @ViewBag.AverageKills </a>
+                </div>
+            }
+        }
+
+        <button id="addPersonButton" class="btn btn-dark"> + Add Another Person</button>
+    </div>
+</div>
+
+    @section scripts {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/custom")
+    }
